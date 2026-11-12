@@ -1,32 +1,42 @@
-﻿# 活俠傳 Fast Forward
+# 活俠傳 高速化MOD
 
-Steam版『活俠傳 / Legend of Mortal』の既読スキップ継続と高速化を補助するMODです。現行版は **1.0.0** です。
+Steam版『活俠傳 / Legend of Mortal』の既読スキップ継続と高速化を補助する非公式MOD。
+
+バージョン：**1.1.0**
 
 ## 主な機能
 
 - CTRL／ゲームパッドの長押し、または右CTRLの切替でスキップを継続。
 - 場面切替やダイス終了後も、スキップ可能になり次第再開。
-- ストーリー・ダイス・決闘の高速化倍率を個別に1～5から設定。デフォルト設定倍率は2。
+- ストーリー・ダイス・決闘の高速化倍率を個別に1～5から設定。初期値は2。
 - 移動先決定後の待ち時間や、画面切替のフェードを短縮。
 - 未読と選択肢では停止。ダイスの開始・結果の続行・振り直しは手動。
 - 戦役は高速化の対象外。
 
-## 注意事項
-- **過度な高速化はゲーム体験に悪影響を及ぼす可能性もあります。高周回・共通パートのスキップなど以外での使用にはご注意ください。**
+## 対応環境
 
-## 導入
+- ゲーム：Steam版『活俠傳 / Legend of Mortal』 v1.0.6001.0
+- OS：Windows（確認環境：Windows 11）
+- BepInEx：6.0.0-be.692（32-bit Mono）
 
-必要環境：Windows版『活俠傳 / Legend of Mortal』、BepInEx 6.0.0-be.692（32-bit）。
+## ダウンロード・導入
 
-1. ゲームを終了し、配布ZIPを展開。
-2. `LegendOfMortalFastForward`フォルダーを、ゲームの`BepInEx/plugins/`へコピー。
+このリポジトリの **Releases → Latest**（URL末尾`/releases/latest`）のAssetsから、
+`LegendOfMortalFastForward.zip`をダウンロードして展開。
+
+1. BepInEx 6を導入し、ゲームを終了。
+2. 展開した`LegendOfMortalFastForward`フォルダーを、ゲームの`BepInEx/plugins/`へコピー。
 3. 更新時は同名DLLを上書き。同じMODのDLLを複数の場所に配置しないこと。
 
 ```text
 BepInEx/plugins/LegendOfMortalFastForward/LegendOfMortalFastForward.dll
 ```
 
-## 操作
+ZIP内の`README_JP.txt`にも導入・基本操作・主な設定を記載。更新内容は[変更履歴](CHANGELOG.md)を参照。
+配布ZIPのSHA-256は同じリリースに添付された`SHA256.txt`を参照。
+Assetsの`Source code (zip)`・`Source code (tar.gz)`はリポジトリの自動アーカイブで、MODの配布ZIPとは別物。
+
+## 操作と設定
 
 | 操作 | 動作 |
 |---|---|
@@ -34,12 +44,16 @@ BepInEx/plugins/LegendOfMortalFastForward/LegendOfMortalFastForward.dll
 | 右CTRL | キーを離しても続くスキップのON/OFF |
 | F4 | 追加高速化のON/OFF。OFFでも標準の既読スキップは使用可能 |
 
-起動時とセーブデータのロード時は、既定でSKIP・HIGH SPEEDともにOFFになります。
-戦役中やゲーム画面から離れている間は休止し、戻ると再開します。タイトルへ戻るとスキップ継続を解除します。
+起動時とセーブデータのロード時は、既定でSKIP・HIGH SPEEDともにOFF。
+戦役中やゲーム画面から離れている間は休止し、戻ると再開。タイトルへ戻るとスキップ継続を解除。
 
-## 設定
+ゲームの環境設定画面で、「MOD設定」の「高速化」を選択。
+倍率はプルダウンで1～5倍から選択。キー割当はボタンを押してから使用するキーを押す。変更は自動保存。
+項目は見出しごとに縦に並び、下の項目へスクロール可能。
 
-初回起動後、`BepInEx/config/lom.jp.fastforward.cfg`を編集してください。`true`は有効、`false`は無効です。
+ファイルで変更する場合は、`BepInEx/config/lom.jp.fastforward.cfg`を編集。
+
+`true`は有効、`false`は無効。変更後にゲームを起動。ゲーム中に変更を反映する方法は「ゲーム中の設定変更」を参照。
 
 ### 高速化
 
@@ -50,8 +64,16 @@ BepInEx/plugins/LegendOfMortalFastForward/LegendOfMortalFastForward.dll
 | `[Speed]` | `DiceMultiplier` | `2` | ダイスの倍率。 |
 | `[Speed]` | `DuelMultiplier` | `2` | 決闘の倍率。戦役は対象外。 |
 
-倍率は1～5。1はゲーム標準の高速化と同等、2～5はその2～5倍です。通常プレイ速度に対する倍率ではありません。  
-**必要なウェイトもあり、純粋に指定倍の速度で進行するというわけではありません。通常は2～3程度を推奨します。**
+倍率は1～5。1はゲーム標準の高速化と同等、2～5はその2～5倍。通常プレイ速度に対する倍率ではない。  
+**必要なウェイトもあり、純粋に指定倍の速度で進行するわけではない。通常は2～3程度を推奨。**
+
+### 移動先画面のフェード
+
+| セクション | 項目 | 初期値 | 説明 |
+|---|---|---|---|
+| `[Transitions]` | `FreeReturnFadeSeconds` | `0.3` | 移動先画面の表示時のフェード時間（秒）。スキップ・HIGH SPEEDがOFFでも適用。 |
+
+0～1.5で指定し、0は専用短縮を無効化。0より大きく0.15未満の値は0.15秒として扱う。すでに短いフェードは遅くしない。読み込み時間自体を短縮する設定ではない。
 
 ### キー・表示
 
@@ -61,8 +83,8 @@ BepInEx/plugins/LegendOfMortalFastForward/LegendOfMortalFastForward.dll
 | `[Input]` | `SpeedToggleKey` | `F4` | 追加高速化の切替キー。 |
 | `[Display]` | `ShowSkipIndicator` | `true` | falseでトグルON中のSKIP表示を非表示。SKIP OFF通知とHIGH SPEED表示、動作には影響しない。 |
 
-左右CTRLは区別できます。キー名の例は`RightCtrl`、`LeftCtrl`、`F4`、`F6`です。切替キーにしたCTRLは長押し用としては使いません。
-2つの切替キーには別のキーを指定してください。重複・`None`・不正な指定では、既定のRightCtrl/F4で動作します。
+左右CTRLは区別可能。キー名の例は`RightCtrl`、`LeftCtrl`、`F4`、`F6`。切替キーにしたCTRLは長押し用としては使わない。
+2つの切替キーには別のキーを指定。重複・`None`・不正な指定では、既定のRightCtrl/F4で動作。
 
 ### 起動・ロード時
 
@@ -71,12 +93,16 @@ BepInEx/plugins/LegendOfMortalFastForward/LegendOfMortalFastForward.dll
 | `[Session]` | `ContinueOnStartup` | `false` | trueで起動時は前回、新規ゲーム開始時は直前のSKIP・HIGH SPEED状態を継続。falseは両方OFF。 |
 | `[Session]` | `ContinueOnLoad` | `false` | trueで通常・オートセーブのロード時に直前のSKIP・HIGH SPEED状態を継続。falseは両方OFF。 |
 
-通常の場面切替や、CTRL・パッドの長押し操作には影響しません。
+通常の場面切替や、CTRL・パッドの長押し操作には影響しない。
 
 ### ゲーム中の設定変更
 
-編集・保存後に速度切替キー（既定F4）を押すと反映します。同時に高速化のON/OFFも切り替わるため、ONのまま倍率を更新したい場合は2回押してください。
-キーを変更した後は、新しいキーを使用します。その他の項目は通常変更不要です。
+画面で確定した変更はすぐに反映・保存。設定後は「戻る」で閉じる。開始時・ロード時の継続設定は、次の開始・ロード時に適用。
+
+設定ファイルを直接編集した場合は、設定ページを開き直すと反映。この操作では高速化のON/OFFを反転しない。
+
+編集・保存後に速度切替キー（既定F4）を押すと反映。同時に高速化のON/OFFも切り替わるため、ONのまま倍率を更新したい場合は2回押す。
+キーを変更した後は、新しいキーを使用。その他の項目は通常変更不要。
 
 ## 画面表示
 
@@ -88,21 +114,21 @@ BepInEx/plugins/LegendOfMortalFastForward/LegendOfMortalFastForward.dll
 | `SKIP OFF` | スキップ継続をOFFにした直後 |
 | `HIGH SPEED` | 追加高速化がON。未読や手動操作待ちは通過しない |
 
-対象の暗転中やロード中などは表示を隠します。
+対象の暗転中やロード中などは表示を隠す。
 
 ## 注意・削除
 
-- 本MOD使用中は、ゲーム側で未読スキップを許可していても未読では停止します。
-- ダイスは自動開始せず、手動での開始を待ちます。
-- 読み込み時間など、倍率どおりに短縮されない処理があります。
-- 実ゲームでの動作確認は未実施です。ゲーム更新後や他MODとの併用時は動作を確認してください。
+- **過度な高速化はゲーム体験に悪影響を及ぼす可能性あり。高周回・共通パートのスキップなど以外での使用には注意が必要。**
+- 日本語化MOD以外の他MODとの併用は動作保証の対象外。
+- 本MOD使用中は、ゲーム側で未読スキップを許可していても未読では停止。
+- ダイスは自動開始せず、手動での開始を待つ。
+- 読み込み時間など、倍率どおりに短縮されない処理がある。
+- 実ゲームでの動作確認は未実施。ゲーム更新後や他MODとの併用時は動作を確認すること。
 
-削除時はゲーム終了後に`BepInEx/plugins/LegendOfMortalFastForward`を削除してください。設定も不要なら`BepInEx/config/lom.jp.fastforward.cfg`を削除できます。
-
-## 更新履歴
-
-[更新履歴](CHANGELOG.md)を参照してください。
+ゲーム終了後に`BepInEx/plugins/LegendOfMortalFastForward`を削除。
+設定も不要なら`BepInEx/config/lom.jp.fastforward.cfg`を削除可能。
 
 ## ライセンス
 
-[MIT License](LICENSE)。配布ZIPにも`LICENSE.txt`を同梱しています。
+[MIT License](LICENSE)。配布ZIPにも同内容の`LICENSE.txt`を同梱。
+ゲーム本体と第三者の著作物へ本MODのライセンスが適用されるものではない。
